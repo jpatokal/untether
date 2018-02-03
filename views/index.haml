@@ -1,0 +1,46 @@
+%html{lang: "en"}
+  %head
+    %meta{charset: "utf-8"}/
+    %title Untether
+    %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
+    %meta{description: "Tracking the impending collapse of Tether (USDT)"}/
+    %link{href: "/vendor/bootstrap/css/bootstrap.min.css", rel: "stylesheet"}/
+    %link{href: "/vendor/social-likes_classic.css", rel: "stylesheet"}/
+    %link{href: "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel: "stylesheet"}/
+  %body
+    .container
+      .bs-docs-section
+        .row{style: "margin: 64px 0px 10px 0px"}
+          %span.h1.text-primary
+            Untether 
+          %p.lead.pull-right
+            Tracking the impending collapse of Tether (USDT)
+
+        .row
+          .col-sm-4
+            %p
+              Exchanges using Tether
+            %p.BitFinex
+            %p.Poloniex
+            %p.Bittrex
+            %p.C-Cex
+
+          .col-sm-4
+            %p
+              Exchanges using USD
+            %p.Bitstamp
+            %p.Kraken
+
+        .row
+          .col-sm-4
+            %p
+              Did you find this useful? Help spread the word:
+          .social.col-sm-7.col-xs-offset-1{style: "margin-left: 10px"}
+            .facebook{title: "Share link on Facebook"} Facebook
+            .twitter{title: "Share link on Twitter", "data-via" => "jpatokal"} Twitter
+            .plusone{title: "Share link on Google+"} Google+
+
+    %script{src: "vendor/jquery-1.9.1.min.js"}
+    %script{src: "vendor/bootstrap/js/bootstrap.min.js"}
+    %script{src: "vendor/social-likes.min.js"}
+    %script{src: "js/untether.js"}
