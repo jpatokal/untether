@@ -3,7 +3,7 @@
     %meta{charset: "utf-8"}/
     %title Untether
     %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
-    %meta{description: "Tracking the impending collapse of Tether (USDT)"}/
+    %meta{description: "Tracking the Tether/USDT risk premium"}/
     %link{href: "/vendor/bootstrap/css/bootstrap.min.css", rel: "stylesheet"}/
     %link{href: "/vendor/social-likes_classic.css", rel: "stylesheet"}/
     %link{href: "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel: "stylesheet"}/
@@ -14,22 +14,61 @@
           %span.h1.text-primary
             Untether 
           %p.lead.pull-right
-            Tracking the impending collapse of Tether (USDT)
+            Tracking the Tether/USDT risk premium
 
         .row
-          .col-sm-4
-            %p
+          .col-sm-6
+            %p.h2
               Exchanges using Tether
-            %p.BitFinex
-            %p.Poloniex
-            %p.Bittrex
-            %p.C-Cex
-
-          .col-sm-4
-            %p
+          .col-sm-6
+            %p.h2
               Exchanges using USD
+
+        .row
+          .col-sm-3
+            %p
+              Bitfinex
+            %p
+              Bittrex
+            %p
+              Hitbtc
+            %p
+              Poloniex
+
+          .col-sm-3
+            %p.BitFinex
+            %p.Bittrex
+            %p.Hitbtc
+            %p.Poloniex
+
+          .col-sm-3
+            %p
+              Bitstamp
+            %p
+              Kraken
+
+          .col-sm-3
             %p.Bitstamp
             %p.Kraken
+
+        .row
+          .col-sm-3
+            %p.text-primary
+              Average
+          .col-sm-3
+            %p.text-primary.tetherAvg
+          .col-sm-3
+            %p.text-primary
+              Average
+          .col-sm-3
+            %p.text-primary.usdAvg
+
+        .row
+          .col-sm-3
+            %p.h2.text-primary
+              Spread
+          .col-sm-3
+            %p.h2.text-primary.spread
 
         .row
           .col-sm-4
