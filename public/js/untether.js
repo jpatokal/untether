@@ -31,6 +31,7 @@ function marketType(name) {
 }
 
 function update() {
+  $('.spinner').removeClass('hidden');
   $.ajax({
     url: "https://api.cryptonator.com/api/full/btc-usd"
   }).success(function(data) {
@@ -59,16 +60,19 @@ function update() {
     }
     tetherAvg = weightedAvg(tetherPrices, tetherVolumes);
     usdAvg = weightedAvg(usdPrices, usdVolumes);
-    spread = tetherAvg - usdAvg
-    $(".tetherAvg").text("$" + tetherAvg.toFixed(2))
-    $(".usdAvg").text("$" + usdAvg.toFixed(2))
-    $(".spread").text("$" + spread.toFixed(2))
+    spread = tetherAvg - usdAvg;
+    $(".tetherAvg").text("$" + tetherAvg.toFixed(2));
+    $(".usdAvg").text("$" + usdAvg.toFixed(2));
+    $(".spread").text("$" + spread.toFixed(2));
+    $(".spreadpercent").text((spread*100/usdAvg).toFixed(2) + "%");
+    $(".date").text(new Date().toLocaleString());
   }).fail(function(data) {
     console.log("Error", data);
   });
+  $('.spinner').addClass('hidden');
 }
 
 $( document ).ready(function() {
-    console.log( "ready!" );
     update();
+    setInterval(update, 60*1000);
 });

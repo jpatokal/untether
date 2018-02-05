@@ -1,7 +1,7 @@
 %html{lang: "en"}
   %head
     %meta{charset: "utf-8"}/
-    %title Untether
+    %title Untether.space
     %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
     %meta{description: "Tracking the Tether/USDT risk premium"}/
     %link{href: "/vendor/bootstrap/css/bootstrap.min.css", rel: "stylesheet"}/
@@ -12,7 +12,7 @@
       .bs-docs-section
         .row{style: "margin: 64px 0px 10px 0px"}
           %span.h1.text-primary
-            Untether 
+            Untether.space
           %p.lead.pull-right
             Tracking the Tether/USDT risk premium
 
@@ -66,9 +66,24 @@
         .row
           .col-sm-3
             %p.h2.text-primary
-              Spread
-          .col-sm-3
-            %p.h2.text-primary.spread
+              Risk premium
+          .col-sm-9
+            %p.h2.text-primary
+              %span.spread
+                %i.fa.fa-spinner.fa-spin
+              (
+              %span.h2.text-primary.spreadpercent
+                %i.fa.fa-spinner.fa-spin
+              )
+
+        .row
+          .col-sm-12
+            %p
+              %span
+                Last updated at
+              %span.date
+              %span.spinner
+                %i.fa.fa-spinner.fa-spin
 
         .row
           .col-sm-4
