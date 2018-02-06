@@ -51,6 +51,10 @@ function update() {
   $(".date").text(timeStamp + ".");
   row = Array(ALL.length).fill(0);
   row.unshift(timeStamp);
+  tetherPrices = [];
+  tetherVolumes = [];
+  usdPrices = [];
+  usdVolumes = [];
 
   $.ajax({
     url: "https://api.cryptonator.com/api/full/btc-usd"
