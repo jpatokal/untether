@@ -3,7 +3,7 @@
     %meta{charset: "utf-8"}/
     %title Untether.space
     %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
-    %meta{description: "Tracking the Tether/USDT risk premium"}/
+    %meta{description: "Tracking the Tether risk premium"}/
     %link{href: "/vendor/bootstrap/css/bootstrap.min.css", rel: "stylesheet"}/
     %link{href: "/vendor/social-likes_classic.css", rel: "stylesheet"}/
     %link{href: "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel: "stylesheet"}/
@@ -14,18 +14,21 @@
           %span.h1.text-primary
             Untether.space
           %p.lead.pull-right
-            Tracking the Tether/USDT risk premium
+            Tracking the Tether (USDT) risk premium
 
         .row
           .col-sm-6
-            %p.h2
+            %p.h2.text-danger
               Exchanges using Tether
           .col-sm-6
-            %p.h2
+            %p.h2.text-success
               Exchanges using USD
 
         .row
-          .col-sm-3
+          .col-sm-1
+            %p
+              %b
+                Name
             %p
               Bitfinex
             %p
@@ -35,52 +38,85 @@
             %p
               Poloniex
 
-          .col-sm-3
+          .col-sm-2.price.text-right
+            %p
+              %b
+                Price
             %p.BitFinex
             %p.Bittrex
             %p.Hitbtc
             %p.Poloniex
 
-          .col-sm-3
+          .col-sm-1.volume.text-right
+            %p
+              %b
+                Volume
+            %p.BitFinex
+            %p.Bittrex
+            %p.Hitbtc
+            %p.Poloniex
+          .col-sm-2
+
+          .col-sm-1
+            %p
+              %b
+                Name
             %p
               Bitstamp
             %p
               Kraken
 
-          .col-sm-3
+          .col-sm-2.price.text-right
+            %p
+              %b
+                Price
+            %p.Bitstamp
+            %p.Kraken
+
+          .col-sm-1.volume.text-right
+            %p
+              %b
+                Volume
             %p.Bitstamp
             %p.Kraken
 
         .row
-          .col-sm-3
-            %p.text-primary
-              Average
-          .col-sm-3
-            %p.text-primary.tetherAvg
-          .col-sm-3
-            %p.text-primary
-              Average
-          .col-sm-3
-            %p.text-primary.usdAvg
+          .col-sm-2
+            %p.text-danger
+              %b
+                Weighted average
+          .col-sm-4
+            %p.text-danger
+              %b.tetherAvg
+          .col-sm-2
+            %p.text-success
+              %b
+                Weighted average
+          .col-sm-4
+            %p.text-success
+              %b.usdAvg
 
         .row
           .col-sm-3
-            %p.h2.text-primary
+            %p.h2.text-danger
               Risk premium
           .col-sm-9
-            %p.h2.text-primary
+            %p.h2.text-danger
               %span.spread
                 %i.fa.fa-spinner.fa-spin
               (
-              %span.h2.text-primary.spreadpercent
+              %span.h2.text-danger.spreadpercent
                 %i.fa.fa-spinner.fa-spin
               )
+
+        .row
+          .col-sm-12#curve_chart{:style => "height: 30%"}
 
         .row
           .col-sm-12
             %p
               %span
-                Last updated at
+                Updates every 30 seconds.  Last updated at
               %span.date
               %span.spinner
                 %i.fa.fa-spinner.fa-spin
@@ -97,4 +133,5 @@
     %script{src: "vendor/jquery-1.9.1.min.js"}
     %script{src: "vendor/bootstrap/js/bootstrap.min.js"}
     %script{src: "vendor/social-likes.min.js"}
+    %script{src: "https://www.gstatic.com/charts/loader.js"}
     %script{src: "js/untether.js"}
