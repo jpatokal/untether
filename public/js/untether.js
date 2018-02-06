@@ -1,5 +1,5 @@
 var TETHERED = [ "BitFinex", "Poloniex", "Hitbtc", "Bittrex" ];
-var USD = [ "Bitstamp", "Kraken" ];
+var USD = [ "Bitstamp", "Kraken", "GDAX" ];
 var ALL = TETHERED.concat(USD);
 // Ignore USD exchanges outside US
 var IGNORED = [ "cex.io", "Exmo", "Livecoin", "WEX.nz" ]
@@ -9,6 +9,12 @@ var timeSeries;
 var chart;
 var ticks = 1;
 var nameToIndex = {};
+
+var row = [];
+var tetherPrices = [];
+var tetherVolumes = [];
+var usdPrices = [];
+var usdVolumes = [];
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(initChart);
@@ -41,16 +47,14 @@ function marketType(name) {
 
 function update() {
   $('.spinner').removeClass('hidden');
+  timeStamp = new Date().toLocaleString();
+  $(".date").text(timeStamp + ".");
+  row = Array(ALL.length).fill(0);
+  row.unshift(timeStamp);
+
   $.ajax({
     url: "https://api.cryptonator.com/api/full/btc-usd"
   }).success(function(data) {
-    tetherPrices = [];
-    tetherVolumes = [];
-    usdPrices = [];
-    usdVolumes = [];
-    timeStamp = new Date().toLocaleString();
-    row = Array(ALL.length ).fill(0);
-    row.unshift(timeStamp);
     for(m in data["ticker"]["markets"]) {
       market = data["ticker"]["markets"][m];
       name = market["market"];
@@ -64,8 +68,8 @@ function update() {
           row[nameToIndex[name]] = price;
           break;
         case "USD":
-          usdPrices.push(price)
-          usdVolumes.push(market["volume"])
+          usdPrices.push(price);
+          usdVolumes.push(market["volume"]);
           row[nameToIndex[name]] = price;
           break;
         default:
@@ -75,27 +79,51 @@ function update() {
       $(".price ." + market["market"]).text("$" + price.toFixed(2));
       $(".volume ." + market["market"]).text(volume.toFixed(0));
     }
-    tetherAvg = weightedAvg(tetherPrices, tetherVolumes);
-    usdAvg = weightedAvg(usdPrices, usdVolumes);
-    row.push(tetherAvg);
-    row.push(usdAvg);
-    spread = tetherAvg - usdAvg;
-    $(".tetherAvg").text("$" + tetherAvg.toFixed(2));
-    $(".usdAvg").text("$" + usdAvg.toFixed(2));
-    $(".spread").text("$" + spread.toFixed(2));
-    $(".spreadpercent").text((spread*100/usdAvg).toFixed(2) + "%");
-    $(".date").text(timeStamp + ".");
     ticks += 1;
-    if (!timeSeries) { return; }
-    timeSeries.addRow(row);
-    if (timeSeries.getNumberOfRows() > 60) {
-      timeSeries.removeRow(0);
-    }
-    drawChart();
   }).fail(function(data) {
     console.log("Error", data);
+    $('.spinner').addClass('hidden');
+  }).always(function(data) {
+    updateGdax();
   });
+}
+
+function updateGdax() {
+  $.ajax({
+    url: "https://api.gdax.com/products/BTC-USD/ticker"
+  }).success(function(data) {
+    price = parseFloat(data["price"]);
+    volume = parseInt(data["volume"]);
+    usdPrices.push(price);
+    usdVolumes.push(volume);
+    row[nameToIndex["GDAX"]] = price;
+    $(".price .GDAX").text("$" + price.toFixed(2));
+    $(".volume .GDAX").text(volume.toFixed(0));
+  }).fail(function(data) {
+    console.log("Error", data);
+  }).always(function(data) {
+    computeAvg();
+  });
+ }
+
+function computeAvg() {
+  tetherAvg = weightedAvg(tetherPrices, tetherVolumes);
+  usdAvg = weightedAvg(usdPrices, usdVolumes);
+  row.push(tetherAvg);
+  row.push(usdAvg);
+  spread = tetherAvg - usdAvg;
+  $(".tetherAvg").text("$" + tetherAvg.toFixed(2));
+  $(".usdAvg").text("$" + usdAvg.toFixed(2));
+  $(".spread").text("$" + spread.toFixed(2));
+  $(".spreadpercent").text((spread*100/usdAvg).toFixed(2) + "%");
   $('.spinner').addClass('hidden');
+
+  if (!timeSeries) { return; }
+  timeSeries.addRow(row);
+  if (timeSeries.getNumberOfRows() > 60) {
+    timeSeries.removeRow(0);
+  }
+  drawChart();
 }
 
 function initChart() {
@@ -105,8 +133,8 @@ function initChart() {
     nameToIndex[ALL[i]] = parseInt(i) + 1;
     timeSeries.addColumn("number", ALL[i]);
   }
-  timeSeries.addColumn("number", "Tether Average");
-  timeSeries.addColumn("number", "USD Average");
+  timeSeries.addColumn("number", "Tether Avg");
+  timeSeries.addColumn("number", "USD Avg");
   chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
   update();
@@ -115,13 +143,14 @@ function initChart() {
 
 function drawChart() {
   var options = {
-    colors: ['red', 'red', 'red', 'red', 'green', 'green', 'darkred', 'darkgreen'],
+    colors: ['red', 'red', 'red', 'red', 'green', 'green', 'green', 'darkred', 'darkgreen'],
     curveType: 'function',
     legend: { position: 'bottom' },
     series: {
-      6: { lineWidth: 2 },
-      7: { lineWidth: 2 }
-    }
+      7: { lineWidth: 2 },
+      8: { lineWidth: 2 }
+    },
+    legendTextStyle: { fontSize: 12 },
   };
   chart.draw(timeSeries, options);
 }

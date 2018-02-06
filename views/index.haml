@@ -10,22 +10,26 @@
   %body
     .container
       .bs-docs-section
-        .row{style: "margin: 64px 0px 10px 0px"}
-          %span.h1.text-primary
-            Untether.space
-          %p.lead.pull-right
-            Tracking the Tether (USDT) risk premium
+        .row{style: "margin: 20px 0px 0px -50px"}
+          .col-md-6
+            %p.h1.text-primary
+              Untether.space
+          .col-md-6
+            %p
+            %p
+            %p.lead
+              Tracking the Tether (USDT) risk premium
 
         .row
-          .col-sm-6
+          .col-md-6
             %p.h2.text-danger
               Exchanges using Tether
-          .col-sm-6
+          .col-md-6
             %p.h2.text-success
               Exchanges using USD
 
         .row
-          .col-sm-1
+          .col-md-1
             %p
               %b
                 Name
@@ -38,7 +42,7 @@
             %p
               Poloniex
 
-          .col-sm-2.price.text-right
+          .col-md-2.price.text-right
             %p
               %b
                 Price
@@ -47,7 +51,7 @@
             %p.Hitbtc
             %p.Poloniex
 
-          .col-sm-1.volume.text-right
+          .col-md-1.volume.text-right
             %p
               %b
                 Volume
@@ -55,52 +59,56 @@
             %p.Bittrex
             %p.Hitbtc
             %p.Poloniex
-          .col-sm-2
+          .col-md-2
 
-          .col-sm-1
+          .col-md-1
             %p
               %b
                 Name
+            %p
+              GDAX
             %p
               Bitstamp
             %p
               Kraken
 
-          .col-sm-2.price.text-right
+          .col-md-2.price.text-right
             %p
               %b
                 Price
+            %p.GDAX
             %p.Bitstamp
             %p.Kraken
 
-          .col-sm-1.volume.text-right
+          .col-md-1.volume.text-right
             %p
               %b
                 Volume
+            %p.GDAX
             %p.Bitstamp
             %p.Kraken
 
         .row
-          .col-sm-2
+          .col-md-2
             %p.text-danger
               %b
                 Weighted average
-          .col-sm-4
+          .col-md-4
             %p.text-danger
               %b.tetherAvg
-          .col-sm-2
+          .col-md-2
             %p.text-success
               %b
                 Weighted average
-          .col-sm-4
+          .col-md-4
             %p.text-success
               %b.usdAvg
 
         .row
-          .col-sm-3
+          .col-md-3
             %p.h2.text-danger
               Risk premium
-          .col-sm-9
+          .col-md-9
             %p.h2.text-danger
               %span.spread
                 %i.fa.fa-spinner.fa-spin
@@ -110,10 +118,11 @@
               )
 
         .row
-          .col-sm-12#curve_chart{:style => "height: 30%"}
+          .col-lg-12#curve_chart{:style => "height: 30%"}
 
         .row
-          .col-sm-12
+          .col-lg-12
+            %p
             %p
               %span
                 Updates every 30 seconds.  Last updated at
@@ -122,13 +131,50 @@
                 %i.fa.fa-spinner.fa-spin
 
         .row
-          .col-sm-4
+          .col-md-12
+            %p.h3.text-primary
+              What does this mean?
             %p
-              Did you find this useful? Help spread the word:
-          .social.col-sm-7.col-xs-offset-1{style: "margin-left: 10px"}
-            .facebook{title: "Share link on Facebook"} Facebook
-            .twitter{title: "Share link on Twitter", "data-via" => "jpatokal"} Twitter
-            .plusone{title: "Share link on Google+"} Google+
+              Most reputable Bitcoin exchanges allow their customers to exchange cryptocurrencies for US dollars (USD).
+              However, some large exchanges including Bitfinex only offer "Tether" tokens (USDT), which are supposed
+              to be exchangable 1:1 to US dollars.
+            %p
+              Because Tethers are riskier than actual US dollars, the market attaches a risk premium to them by
+              demanding more Tethers than USD in exchange for a Bitcoin.   This site tracks that risk premium.
+
+            %p.h3.text-primary
+              Why should I care?
+            %p
+              Over $2 billion dollars of Tether have been issued, but the company behind them has never been audited
+              and was
+              %a{:href => "https://www.nytimes.com/reuters/2018/01/30/business/30reuters-usa-cftc-subpoena.html"} subpoenaed by the Commodity Futures Trading Commission in December 2017.
+            %p
+              What's more, Tether is closely linked to the Bitfinex exchange, which is suspected of using Tether
+              to
+              %a{:href => "https://www.nytimes.com/2018/01/31/technology/bitfinex-bitcoin-price.html"} artificially prop up the price of Bitcoin.
+
+            %p
+              If it becomes clear that Tether is not backed by USD, the risk premium (spread) on all Tether
+              exchanges will skyrocket and those exchanges will likely become insolvent, trapping customer funds,
+              %a{:href => "https://dmarron.files.wordpress.com/2013/09/bitcoin-spread.jpg"} as happened in 2013 with Mt. Gox.
+
+            %p.h3.text-primary
+              Did you find this useful?
+            %p
+              Help spread the word:
+              .social-likes
+                .facebook{title: "Share link on Facebook"} Facebook
+                .twitter{title: "Share link on Twitter", "data-via" => "jpatokal"} Twitter
+                .plusone{title: "Share link on Google+"} Google+
+
+            %p.h3.text-primary
+              Credits
+            %p
+              Data from
+              %a{:href => "https://www.cryptonator.com/api"} Cryptonator
+              and the
+              %a{:href => "https://docs.gdax.com/?ruby#get-product-ticker"} GDAX API.
+              %a{:href => "https://github.com/jpatokal/untether"} Source on Github.
 
     %script{src: "vendor/jquery-1.9.1.min.js"}
     %script{src: "vendor/bootstrap/js/bootstrap.min.js"}
