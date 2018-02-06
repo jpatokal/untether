@@ -49,7 +49,7 @@ function update() {
   $('.spinner').removeClass('hidden');
   timeStamp = new Date().toLocaleString();
   $(".date").text(timeStamp + ".");
-  row = Array(ALL.length).fill(0);
+  row = Array(ALL.length + 2).fill(0);
   row.unshift(timeStamp);
   tetherPrices = [];
   tetherVolumes = [];
@@ -113,8 +113,8 @@ function updateGdax() {
 function computeAvg() {
   tetherAvg = weightedAvg(tetherPrices, tetherVolumes);
   usdAvg = weightedAvg(usdPrices, usdVolumes);
-  row.push(tetherAvg);
-  row.push(usdAvg);
+  row[1] = tetherAvg;
+  row[2] = usdAvg;
   spread = tetherAvg - usdAvg;
   $(".tetherAvg").text("$" + tetherAvg.toFixed(2));
   $(".usdAvg").text("$" + usdAvg.toFixed(2));
@@ -133,12 +133,12 @@ function computeAvg() {
 function initChart() {
   timeSeries = new google.visualization.DataTable();
   timeSeries.addColumn("string", "Time");
-  for(i in ALL) {
-    nameToIndex[ALL[i]] = parseInt(i) + 1;
-    timeSeries.addColumn("number", ALL[i]);
-  }
   timeSeries.addColumn("number", "Tether Avg");
   timeSeries.addColumn("number", "USD Avg");
+  for(i in ALL) {
+    nameToIndex[ALL[i]] = parseInt(i) + 3;
+    timeSeries.addColumn("number", ALL[i]);
+  }
   chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
   update();
@@ -147,12 +147,12 @@ function initChart() {
 
 function drawChart() {
   var options = {
-    colors: ['red', 'red', 'red', 'red', 'green', 'green', 'green', 'darkred', 'darkgreen'],
+    colors: ['red', 'green', 'darkred', 'darkred', 'darkred', 'darkred', 'darkgreen', 'darkgreen', 'darkgreen'],
     curveType: 'function',
     legend: { position: 'bottom' },
     series: {
-      7: { lineWidth: 2 },
-      8: { lineWidth: 2 }
+      0: { lineWidth: 3, lineDashStyle: [4, 1] },
+      1: { lineWidth: 3, lineDashStyle: [4, 1] }
     },
     legendTextStyle: { fontSize: 12 },
   };
