@@ -9,6 +9,9 @@ var timeSeries;
 var chart;
 var ticks = 1;
 var nameToIndex = {};
+// Update interval; not constant, slows down as data accunulates
+var interval = 30;
+var maxSamples = 60;
 
 var row = [];
 var tetherPrices = [];
@@ -49,6 +52,7 @@ function update() {
   $('.spinner').removeClass('hidden');
   timeStamp = new Date().toLocaleString();
   $(".date").text(timeStamp + ".");
+  $(".interval").text(interval);
   row = Array(ALL.length + 2).fill(0);
   row.unshift(timeStamp);
   tetherPrices = [];
@@ -89,6 +93,7 @@ function update() {
     $('.spinner').addClass('hidden');
   }).always(function(data) {
     updateGdax();
+    setTimeout(update, interval*1000);
   });
 }
 
@@ -124,8 +129,12 @@ function computeAvg() {
 
   if (!timeSeries) { return; }
   timeSeries.addRow(row);
-  if (timeSeries.getNumberOfRows() > 60) {
-    timeSeries.removeRow(0);
+  if (timeSeries.getNumberOfRows() > maxSamples) {
+    // buffer full: halve update speed and resample to drop every other row
+    interval *= 2;
+    for(i = timeSeries.getNumberOfRows() - 2; i > 0; i -= 2) {
+      timeSeries.removeRow(i);
+    }
   }
   drawChart();
 }
@@ -140,9 +149,7 @@ function initChart() {
     timeSeries.addColumn("number", ALL[i]);
   }
   chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
   update();
-  setInterval(update, 30*1000);
 }
 
 function drawChart() {

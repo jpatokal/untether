@@ -125,7 +125,9 @@
             %p
             %p
               %span
-                Updates every 30 seconds.  Last updated at
+                Updates every
+                %span.interval
+              seconds.  Last updated at
               %span.date
               %span.spinner
                 %i.fa.fa-spinner.fa-spin
@@ -171,6 +173,10 @@
             %p.h3.text-primary
               Credits
             %p
+              Written by
+              %a{:href => "https://gyrovague.com"} Jani Patokallio
+              %a{:href => "https://twitter.com/jpatokal"} (@jpatokal).
+
               Data from
               %a{:href => "https://www.cryptonator.com/api"} Cryptonator
               and the
