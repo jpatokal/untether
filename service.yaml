@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: untether-service
+spec:
+  selector:
+    app: untether
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 3000
+

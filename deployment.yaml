@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: untether-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: untether
+    spec:
+      containers:
+      - name: untether
+        image: untether:latest
+        ports:
+        - containerPort: 3000
+
