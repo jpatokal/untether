@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: untether-cron
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: untether-cron
+            image: untether-cron:latest
+            command: ["ruby"]
+            args:
+            - DB_HOST DB_USER DB_PASSWORD
+          env:
+            - name: DB_HOST
+              value: 10.18.0.3
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: password
+          restartPolicy: OnFailure
